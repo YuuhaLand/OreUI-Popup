@@ -1,0 +1,267 @@
+{
+  "namespace": "popup_dialog",
+
+  "ore_ui_button_texture": {
+    "type": "image",
+    "$button_color|default": [ 1, 1, 1 ],
+    "$button_type|default": "green",
+    "$button_stat|default": "default",
+    "texture": "('textures/ui/ore_ui_style/button_' + $button_type + '_' + $button_stat)",
+    "size": [ "100%", "100%" ],
+    "layer": 1,
+    "controls": [
+      {
+        "button_text": {
+          "type": "label",
+          "size": [ "100%", 10 ],
+          "text": "$button_text",
+          "text_alignment": "center",
+          "color": "$button_color",
+          "offset": "$offset",
+          "layer": 2,
+          "$offset|default": [ 0, -1 ],
+          "variables": [
+            {
+              "requires": "($button_stat = 'pressed')",
+              "$offset": [ 0, 1 ]
+            }
+          ],
+          "bindings": [
+            {
+              "binding_name": "$button_text"
+            }
+          ]
+        }
+      }
+    ]
+  },
+
+  "ore_ui_button_green@common.button": {
+    "$button_color": [ 1, 1, 1 ],
+    "$button_type": "green",
+    "controls": [
+      {
+        "default@popup_dialog.ore_ui_button_texture": {
+          "$button_stat": "default"
+        }
+      },
+      {
+        "hover@popup_dialog.ore_ui_button_texture": {
+          "$button_stat": "hover"
+        }
+      },
+      {
+        "pressed@popup_dialog.ore_ui_button_texture": {
+          "$button_stat": "pressed"
+        }
+      }
+    ]
+  },
+
+  "ore_ui_button_white@popup_dialog.ore_ui_button_green": {
+    "$button_color": [ 0.118, 0.118, 0.122 ],
+    "$button_type": "white"
+  },
+
+  "modal_dialog_with_buttons": {
+    "type": "image",
+    "size": "$modal_screen_size",
+    "texture": "textures/ui/ore_ui_style/back",
+    "controls": [
+      {
+        "content": {
+          "type": "panel",
+          "size": [ "100% - 2px", "100% - 2px" ],
+          "controls": [
+            {
+              "title": {
+                "type": "image",
+                "size": [ "100%", 21 ],
+                "texture": "textures/ui/ore_ui_style/title",
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "layer": 1,
+                "controls": [
+                  {
+                    "title_text": {
+                      "type": "label",
+                      "size": [ "100%", 10 ],
+                      "text": "#text",
+                      "text_tts": "#tts_text",
+                      "text_alignment": "center",
+                      "color": [ 1, 1, 1 ],
+                      "shadow": false,
+                      "layer": 2,
+                      "bindings": [
+                        {
+                          "binding_type": "view",
+                          "source_control_name": "$visibility_source_control_name",
+                          "source_property_name": "#modal_title_text",
+                          "target_property_name": "#text"
+                        },
+                        {
+                          "binding_type": "view",
+                          "source_control_name": "$visibility_source_control_name",
+                          "source_property_name": "#modal_title_tts",
+                          "target_property_name": "#tts_text"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "text@popup_dialog.modal_label_panel": {
+                "$body_text_color": [ 1, 1 ,1 ],
+                "anchor_from": "top_middle",
+                "anchor_to": "top_middle",
+                "offset": [ 0, 23 ],
+                "size": "$modal_panel_label_size"
+              }
+            },
+            {
+              "button_panel@$button_panel": {}
+            }
+          ]
+        }
+      }
+    ]
+  },
+
+  "single_button_panel": {
+    "type": "image",
+    "texture": "textures/ui/ore_ui_style/buttonpanel",
+    "anchor_to": "bottom_middle",
+    "anchor_from": "bottom_middle",
+    "size": [ "100%", 35 ],
+    "offset": [ 0, 0 ],
+    "controls": [
+      {
+        "buttons_stack": {
+          "type": "stack_panel",
+          "size": [ "100%-14px", "100%c" ],
+          "controls": [
+            {
+              "left@popup_dialog.ore_ui_button_green": {
+                "$pressed_button_name": "$popup_dialog_middle_button_name",
+                "$button_text": "#modal_middle_button_text",
+                "size": [ "100%", 21 ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+
+  "two_buttons_panel": {
+    "type": "image",
+    "texture": "textures/ui/ore_ui_style/buttonpanel",
+    "anchor_to": "bottom_middle",
+    "anchor_from": "bottom_middle",
+    "size": [ "100%", 60 ],
+    "offset": [ 0, 0 ],
+    "controls": [
+      {
+        "buttons_stack": {
+          "type": "stack_panel",
+          "size": [ "100%-14px", "100%c" ],
+          "controls": [
+            {
+              "left@popup_dialog.ore_ui_button_green": {
+                "$pressed_button_name": "$popup_dialog_left_button_name",
+                "$button_text": "#modal_left_button_text",
+                "size": [ "100%", 21 ]
+              }
+            },
+            {
+              "padding_01": {
+                "type": "panel",
+                "size": [ 0, 2 ]
+              }
+            },
+            {
+              "right@popup_dialog.ore_ui_button_white": {
+                "$pressed_button_name": "$popup_dialog_rightcancel_button_name",
+                "$button_text": "#modal_rightcancel_button_text",
+                "size": [ "100%", 21 ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  
+  "modal_dialog_popup": {
+    "type": "panel",
+    "variables": [
+      {
+        "requires": "$three_buttons_visible",
+        "$modal_screen_size": [ 214, 190 ],
+        "$dialog_background_override": "dialog_background_hollow_6",
+        "$button_panel": "popup_dialog.three_buttons_panel",
+        "$modal_panel_label_size": [ "100% - 16px", "100% - 124px" ]
+      },
+      {
+        "requires": "$destructive_three_buttons_visible",
+        "$modal_screen_size": [ 214, 190 ],
+        "$dialog_background_override": "dialog_background_hollow_6",
+        "$button_panel": "popup_dialog.destructive_three_buttons_panel",
+        "$modal_panel_label_size": [ "100% - 16px", "100% - 124px" ]
+      },
+      {
+        "requires": "$two_buttons_visible",
+        "$modal_screen_size": [ 214, 175 ],
+        "$dialog_background_override": "dialog_background_hollow_1",
+        "$button_panel": "popup_dialog.two_buttons_panel",
+        "$modal_panel_label_size": [ "100% - 16px", "100% - 82px" ]
+      },
+      {
+        "requires": "$destructive_two_buttons_visible",
+        "$modal_screen_size": [ 214, 175 ],
+        "$dialog_background_override": "dialog_background_hollow_1",
+        "$button_panel": "popup_dialog.two_buttons_panel",
+        "$modal_panel_label_size": [ "100% - 16px", "100% - 82px" ]
+      },
+      {
+        "requires": "$single_button_visible",
+        "$modal_screen_size": [ 214, 130 ],
+        "$dialog_background_override": "dialog_background_hollow_2",
+        "$button_panel": "popup_dialog.single_button_panel",
+        "$modal_panel_label_size": [ "100% - 16px", "100% - 57px" ]
+      },
+      {
+        "requires": "$no_buttons_visible",
+        "$modal_screen_size": [ 214, 100 ],
+        "$dialog_background_override": "dialog_background_hollow_3",
+        "$button_panel": "common.empty_panel",
+        "$modal_panel_label_size": [ "100% - 16px", "100% - 28px" ]
+      }
+    ],
+    "controls": [
+      {
+        "modal_input@popup_dialog.modal_input_panel": {
+          "$show_black_background|default": false,
+          "controls": [
+            {
+              "modal_bg_buttons@popup_dialog.modal_dialog_with_buttons": {
+                "$visibility_source_control_name|default": "modal_bg_buttons",
+                "layer": 2
+              }
+            },
+            {
+              "black_background": {
+                "type": "image",
+                "texture": "textures/ui/realms_text_background",
+                "ignored": "(not $show_black_background)",
+                "layer": 1
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

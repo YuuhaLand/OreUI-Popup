@@ -1,0 +1,17 @@
+{
+  "format_version": 2,
+  "header": {
+    "name": "OreUI風 ポップアップ",
+    "description": "ポップアップダイアログをOreUI風にします\nby YuuhaLand",
+    "uuid": "96bac7db-e7ed-4bdc-bc44-4d4403165916",
+    "version": [ 1, 0, 0 ],
+    "min_engine_version": [ 1, 13, 0 ]
+  },
+  "modules": [
+    {
+      "type": "resources",
+      "uuid": "733ef3f6-029d-4c29-ba4c-dc0101077399",
+      "version": [ 1, 0, 0 ]
+    }
+  ]
+}
